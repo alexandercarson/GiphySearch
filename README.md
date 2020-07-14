@@ -17,8 +17,5 @@ REACT_APP_API_HOST_PREFIX="https://api.giphy.com/v1/gifs/search"
 
 REACT_APP_GIPHY_API_KEY=THE_API_KEY
 
-
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 # GiphySearch
 
