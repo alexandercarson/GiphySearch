@@ -12,7 +12,7 @@ const key = GIPHY_API_KEY;
 let searchGiphys = (query) => {
   const config = {
     method: "GET",
-    url: baseUrl + `?api_keys=${key}&q=${query}`,
+    url: baseUrl + `?api_key=${key}&q=${query}`,
     headers: {
       "Content-Type": "application/json",
     },
