@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { searchGiphys } from "../services/giphyService";
 import Giphys from "./Giphys";
-import { Container, Col, Row, Button, Input } from "reactstrap";
+import { Container, Col, Row, Button } from "reactstrap";
 import Swal from "sweetalert2";
+import * as Yup from "yup";
+import "./errors.css";
+const searchValidationSchema = Yup.object().shape({
+  query: Yup.string()
+    .min(2, "Search term is Too Short!")
+    .max(50, "Search term is Too Long!")
+    .required("A Search term is Required"),
+});
 
 const Search = () => {
   const [giphys, setGiphys] = useState([]);
@@ -42,7 +50,9 @@ const Search = () => {
       <div id="formik-giph-search" className="mb-4">
         <Formik
           initialValues={{ query: "" }}
+          validationSchema={searchValidationSchema}
           onSubmit={(values, { setSubmitting }) => {
+            console.log(values);
             searchGiphys(values.query)
               .then(setIsLoading(true))
               .then(onSearchSuccess)
@@ -53,9 +63,8 @@ const Search = () => {
           {({ isSubmitting }) => (
             <Form>
               <Row className="justify-content-center mb-2">
-                <Col md={8}>
+                <Col className="text-center" md={8}>
                   <Field
-                    component={Input}
                     type="text"
                     name="query"
                     id="giph-search-query"
@@ -72,6 +81,9 @@ const Search = () => {
                   Submit Search
                 </Button>
               </Row>
+              <div className="text-center error">
+                <ErrorMessage name="query"></ErrorMessage>
+              </div>
             </Form>
           )}
         </Formik>
